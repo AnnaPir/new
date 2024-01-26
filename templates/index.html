@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Number</title>
+</head>
+<body>
+    <h1>Номер</h1>
+    <form action="/main" method="post">
+        <label for="Number">Введіть ваш номер: </label>
+        <input type="text" id="Number" name="Number" required>
+        <br>
+        <input type="submit" value="Надіслати">
+        <br>
+        {% if location %}
+            {{location}}
+        {% endif %}
+    </form>
+</body>
+</html>

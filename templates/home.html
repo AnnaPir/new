@@ -13,57 +13,63 @@
         .about{
             width:100%;
             height:90px;
-            margin-left:10px;
+            margin-left:0px;
             font-size:40px;
             background:rgb(255,228,196);
             font-family:Open Sans;
         }
-        .math{
+        .student{
             width:100%;
-            height:50px;
-            margin-left:10px;
+            height:90px;
+            margin-left:30px;
             font-size:30px;
             font-family:Open Sans;
-        }
-        .merzlyak{
-            width:100%;
-            height:40px;
-            margin-left:30px;
-            font-size:25px;
-            font-family:Open Sans;
-        }
-        .uk{
-            width:100%;
-            height:50px;
-            margin-left:10px;
-            font-size:30px;
-            font-family:Open Sans;
-        }
-        .zab{
-            width:100%;
-            height:40px;
-            margin-left:30px;
-            font-size:25px;
-            font-family:Open Sans;
+            color: 	#A0522D;
         }
     </style>
 </head>
 <body>
     <div class="about">
-        Тут ви можете знайти важливу інформацію, кращі відповіді,
+        Тут ви можете знайти важливу інформацію, кращі таблиці,
         зворотню підтрімку. Сайт на все жіття!
+        <a href="http://127.0.0.1:5000/recall">
+            напиши свій відгук.
+        </a>
     </div><br>
-    <div class="math">
-        Математика
-    </div>
-    <div class="merzlyak">
-        <a href="http://127.0.0.1:5000/merzlyak">А.Г. Мерзляк</a>
-    </div>
-    <div class="uk">
-        Українська мова
-    </div>
-    <div class="zab">
-        <a href="http://127.0.0.1:5000/zabolotnio">В.В. Заболотний</a>
-    </div>
+    <form action="/add_user" method="post">
+        <div class="name-box">
+            <p class="input-group-text">Введіть ваше ім'я та прізвище:</p>
+            <input type="text"  placeholder="Василь" name="name">
+            <input type="text"  placeholder="Петренко" name="surname">
+        </div>
+        <div class="email-box">
+            <p class="input-group-text">Вкажіть вашу електронну пошту:</p>
+            <input type="email"  placeholder="example@gmail.com" name="email">
+        </div>
+        <div class="points-box">
+            <p class="input-group-text">Введіть підсумкові балли:</p>
+            <input type="text"  placeholder="22" name="points">
+        </div>
+        <div class="authorization-box">
+            <p class="input-group-text">Введіть слово для авторизації:</p>
+            <input type="text" name="authorization">
+        </div>
+        <button type="submit">Додати</button>
+    </form>
+    <form action="/del_st" method="post">
+        <div class="del-num-box">
+            <p class="input-num-text">Введіть номер студента для вмдалення:</p>
+            <input type="number" name="delnum">
+        </div>
+        <button type="submit">Видалити</button>
+    </form>
+    {% if users %}
+        <h1>УЧНІ:</h1>
+        <ul>
+            {% for user in users %}
+                <li class="student">{{user.name}} {{user.surname}} {{user.email}} {{user.points}} {{user.authorization}}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 </body>
 </html>

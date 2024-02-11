@@ -36,7 +36,7 @@
             напиши свій відгук.
         </a>
     </div><br>
-    <form action="/add_user" method="post">
+    <form action="/add_student" method="post">
         <div class="name-box">
             <p class="input-group-text">Введіть ваше ім'я та прізвище:</p>
             <input type="text"  placeholder="Василь" name="name">
@@ -59,15 +59,18 @@
     <form action="/del_st" method="post">
         <div class="del-num-box">
             <p class="input-num-text">Введіть номер студента для вмдалення:</p>
-            <input type="number" name="delnum">
+            <input type="number" name="student_id">
         </div>
         <button type="submit">Видалити</button>
     </form>
-    {% if users %}
+    {% if message %}
+        <p>{{message}}</p>
+    {% endif %}
+    {% if students %}
         <h1>УЧНІ:</h1>
         <ul>
-            {% for user in users %}
-                <li class="student">{{user.name}} {{user.surname}} {{user.email}} {{user.points}} {{user.authorization}}</li>
+            {% for student in students %}
+                <li class="student">{{student.name}} {{student.surname}} {{student.email}} {{student.points}} {{student.authorization}}</li>
             {% endfor %}
         </ul>
     {% endif %}

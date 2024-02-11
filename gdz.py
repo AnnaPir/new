@@ -7,7 +7,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)  # binding DB and Flask App
 
 
-class User(db.Model):
+class Student(db.Model):
     __tablename__ = "students"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
@@ -19,9 +19,9 @@ class User(db.Model):
 
 @app.route("/")
 def index():
-    users = User.query.all()
-    print(users)
-    return render_template("home.html", users=users)
+    students = Student.query.all()
+    print(students)
+    return render_template("home.html", students=students)
 
 
 @app.route("/recall")
@@ -29,36 +29,39 @@ def recall1():
     return render_template("recall.html")
 
 
-@app.route("/add_user", methods=["POST"])
-def add_user():
+@app.route("/add_student", methods=["POST"])
+def add_student():
     name = request.form["name"]
     surname = request.form["surname"]
     email = request.form["email"]
     points = request.form["points"]
     authorization = request.form["authorization"]
-    new_user = User(
+    new_student = Student(
         name=name,
         surname=surname,
         email=email,
         points=points,
         authorization=authorization
     )
-    db.session.add(new_user)
+    db.session.add(new_student)
     db.session.commit()
     return redirect("/")
 
 
 @app.route("/del_st", methods=["POST"])
 def del_st():
-    delnum = request.form["delnum"]
-    print(delnum)
-    db.session.delete(delnum)
-    db.session.commit()
-    return redirect("/")
-
-
-def rec(rec):
-    return rec
+    student_id = int(request.form["student_id"])
+    print(student_id)
+    student = Student.query.get(student_id)
+    message = f"Student with ID {student_id} wasn`t found"
+    if student:
+        db.session.delete(student)
+        db.session.commit()
+        message = f"Student with ID {student_id} has been removed"
+    students = Student.query.all()
+    return render_template("home.html",
+                           students=students,
+                           message=message)
 
 
 if __name__ == "__main__":
